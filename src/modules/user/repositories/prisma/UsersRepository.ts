@@ -1,9 +1,10 @@
 import { User } from "@prisma/client";
 import { prisma } from "../../../../database";
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUsersRepository } from "../interfaces/IUsersRepository";
 
 export class UserRepository implements IUsersRepository {
-  public async create(name: string, email: string, password: string): Promise<User> {
+  public async create({ name, email, password }: ICreateUserDTO): Promise<User> {
     const user = await prisma.user.create({
       data: { name, email, password }
     })

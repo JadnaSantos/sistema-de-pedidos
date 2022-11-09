@@ -6,7 +6,7 @@ export class ListCategoryService {
   ) { }
 
   public async execute() {
-    const category = await this.categoryRepository.findCategory()
+    const category = await this.categoryRepository.listCategories()
 
     return category
   }

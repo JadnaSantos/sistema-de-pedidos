@@ -22,11 +22,11 @@ export class CreateUserService {
 
     const hashedPassword = await hash(password, 10)
 
-    const user = await this.usersRepository.create(
+    const user = await this.usersRepository.create({
       name,
       email,
-      password = hashedPassword
-    )
+      password: hashedPassword
+    })
 
     return user;
   }
