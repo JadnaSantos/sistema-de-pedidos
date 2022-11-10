@@ -14,7 +14,7 @@ export class CreateCategoryService {
       throw new AppError('Name invalid')
     }
 
-    const category = await this.categoryRepository.create(name)
+    const category = await this.categoryRepository.create({ name })
 
     return category
   }

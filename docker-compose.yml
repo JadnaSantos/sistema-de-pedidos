@@ -1,15 +1,15 @@
-version: "3.8"
+version: '3.8'
 services:
   postgres:
     image: postgres:latest
-    container_name: car-rent
+    container_name: orders-system
     restart: always
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=order-system
+      - POSTGRES_PASSWORD=postgres54321
+      - POSTGRES_DB=postgres
     volumes:
       - pgdata:/data/postgres
 volumes:

@@ -1,6 +1,7 @@
 import { Category } from "@prisma/client";
+import { ICategoryDTO } from "../../dtos/ICategoryDTO";
 
 export interface ICategoryRepository {
-  create(name: string): Promise<Category>
+  create({ name }: ICategoryDTO): Promise<Category>
   listCategories(): Promise<Category>
 }

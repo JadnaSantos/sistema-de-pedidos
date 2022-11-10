@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { CreateUserService } from "../../../user/useCases/user/CreateUserService";
 import { CategoryRepository } from "../../repositories/prisma/CategoryRepository";
 import { ListCategoryService } from "./ListCategoryService";
 
