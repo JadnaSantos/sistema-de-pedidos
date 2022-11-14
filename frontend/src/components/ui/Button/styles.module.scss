@@ -1,0 +1,42 @@
+.button {
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+
+  background-color: var(--blue-dark);
+
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+
+  transition: filter 0.2s;
+
+  &[disabled] {
+    cursor: not-allowed;
+
+    svg {
+      animation: animate 2s infinite;
+    }
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+.buttonText {
+  color: var(--white);
+}
+
+@keyframes animate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
