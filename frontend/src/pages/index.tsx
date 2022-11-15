@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import styles from '../../styles/home.module.scss'
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/Button';
 import { AuthContext } from '../contexts/AuthContext';
 import Logo from '../../public/Logo.svg'
 import { zodResolver } from "@hookform/resolvers/zod";

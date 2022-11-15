@@ -7,7 +7,7 @@ import Logo from '../../../public/Logo.svg'
 import Link from 'next/link'
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod'
-import { Button } from '../../components/ui/Button'
+import { Button } from '../../components/Button'
 import { AuthContext } from '../../contexts/AuthContext'
 
 const FormValidationSignupSchema = zod.object({

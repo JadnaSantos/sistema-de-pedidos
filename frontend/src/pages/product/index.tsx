@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Header } from "../../components/Header";
-import { canSSRAuth } from "../../utils/canSSRAuth";
 import styles from './styles.module.scss';
 import { api } from "../../services/apiClient";
 import { toast } from "react-toastify";
@@ -169,13 +168,3 @@ export default function Product() {
     </>
   )
 }
-
-
-export const getServerSideProsp = canSSRAuth(async (context) => {
-
-  return {
-    props: {
-
-    }
-  }
-})
