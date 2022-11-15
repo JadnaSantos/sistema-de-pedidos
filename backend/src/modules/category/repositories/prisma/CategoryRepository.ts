@@ -14,11 +14,11 @@ export class CategoryRepository implements ICategoryRepository {
     return category
   }
 
-  public async listCategories(): Promise<Category> {
+  public async listCategories(): Promise<Category[]> {
     const category = await prisma.category.findMany({
       select: {
         id: true,
-        name: true
+        name: true,
       }
     })
 

@@ -3,13 +3,17 @@ import 'express-async-errors';
 import cors from 'cors';
 import path from 'path';
 import { AppError } from '../errors/AppError';
+import swaggerFile from "../swagger.json";
+import swaggerUi from "swagger-ui-express";
 import { routes } from './routes/routes';
 
 export const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 app.use(routes);
+
 
 app.use('/files', express.static(path.resolve(__dirname, '..', 'upload')))
 

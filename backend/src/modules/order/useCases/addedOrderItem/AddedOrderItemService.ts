@@ -1,8 +1,8 @@
-import { AddedOrderItemRepository, IRequestAddedOrder } from "../../repositories/interfaces/IAddedOrderItemRepository"
+import { IAddedOrderItemRepository, IRequestAddedOrder } from "../../repositories/interfaces/IAddedOrderItemRepository"
 
 export class AddedOrderItemService {
   constructor(
-    private orderRepository: AddedOrderItemRepository
+    private orderRepository: IAddedOrderItemRepository
   ) { }
 
   public async execute({ order_id, product_id, amount }: IRequestAddedOrder) {
