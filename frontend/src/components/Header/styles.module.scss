@@ -18,8 +18,7 @@
   align-items: center;
 
   p {
-    color: var(--black);
-    font-weight: bold;
+    color: var(--white);
     padding: 0 0.5rem;
 
     display: inline-block;
@@ -30,9 +29,6 @@
       margin-left: 2rem;
     }
 
-    &:hover {
-      color: var(--white);
-    }
   }
 
   button {

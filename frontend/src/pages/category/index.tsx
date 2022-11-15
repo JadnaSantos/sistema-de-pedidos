@@ -6,6 +6,8 @@ import * as zod from 'zod'
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { api } from "../../services/apiClient";
+import { canSSRAuth } from '../../utils/canSSRAuth'
+
 
 const FormValidationNameCategorySchema = zod.object({
   name: zod.string()
@@ -22,8 +24,10 @@ export default function Category() {
   const { handleSubmit, register, reset } = FormValidation
 
   async function handleRegister(data: SchemaFields) {
+    const { name } = data
+
     await api.post('/category', {
-      data: data.name
+      name
     })
 
     toast.success('Categoria cadastrada com sucesso!')
@@ -49,7 +53,6 @@ export default function Category() {
             <input
               type='text'
               placeholder='Digite o nome da categoria'
-              required
               className={styles.input}
               {...register("name")}
             />
@@ -66,3 +69,10 @@ export default function Category() {
     </>
   )
 }
+
+export const getServerSideProsp = canSSRAuth(async (context) => {
+  return {
+    props: {}
+  }
+})
+

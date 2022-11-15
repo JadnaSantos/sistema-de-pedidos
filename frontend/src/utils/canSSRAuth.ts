@@ -1,5 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { parseCookies, destroyCookie } from 'nookies'
+import { AuthTokenError } from "../services/interceptors/AuthTokenError";
 import { errorInterceptor } from "../services/interceptors/ErrorInterceptor";
 
 
@@ -22,7 +23,7 @@ export function canSSRAuth<P>(fn: GetServerSideProps<P>) {
     try {
       return await fn(context)
     } catch (error) {
-      if (error instanceof errorInterceptor) {
+      if (error instanceof AuthTokenError) {
         destroyCookie(context, '@nextauth.token')
 
         return {
