@@ -22,7 +22,7 @@ export class AuthenticateUserService {
       throw new AppError('Incorrect email or password', 401)
     }
 
-    const token = sign({ name: user.name, email: user.email }, 'b1cd0c7e1e8495eb8ef2cf9214a428a2', {
+    const token = sign({ name: user.name, email: user.email }, '', {
       subject: user.id,
       expiresIn: '1d'
     })

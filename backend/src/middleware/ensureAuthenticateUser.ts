@@ -18,7 +18,7 @@ export async function ensureAuthenticateUser(request: Request, response: Respons
   const [, token] = authHeader.split(" ")
 
   try {
-    const { sub } = verify(token, 'b1cd0c7e1e8495eb8ef2cf9214a428a2') as IPayload
+    const { sub } = verify(token, '') as IPayload
 
     request.user_id = sub
 
