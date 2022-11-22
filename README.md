@@ -1,11 +1,8 @@
 <h1 align="center"> Sistema de Pedidos 👩🏾‍🍳 </h1>
 
-## in progress 🚧
+### 🚀 Tecnologias
 
-
-## 🚀 Tecnologias
-
-### Back-End
+#### Back-End
 
 -  [Node.js](https://nodejs.org/en/)
 -  [Express](https://expressjs.com/)
@@ -16,17 +13,25 @@
 -  [Swagger](https://swagger.io/)
 
 
-### Banco de dados
+#### Banco de dados
 
 - [PostgresSql](https://www.postgresql.org/)
 - [Docker](https://www.docker.com)
 
-### Front-End 
+#### Front-End 
 
 - [Nextjs](https://nextjs.org/)
 - [SAAS](https://sass-lang.com/)
 
-## 📃 Regras de Négocio
+<details open>
+  <summary><h3>Arquitetura </h3></summary>
+Para execução do projeto eu procurei utilizar Single Responsibility Principle (SRP), que basicamente consiste 
+em modulos e funções deve ter uma responsabilidade.
+  
+</details>  
+
+
+### 📃 Regras de Négocio
 
 - [x] Cadastrar um novo usuário;
 - [x] Logar um usuário;
@@ -40,7 +45,7 @@
 - [x] Concluir pedido
 
 
-## ✅ Requisitos
+## ✅ Requisitos Back end
 
 Para executar o projeto você precisa instalar as depedência citadas a cima 
 
@@ -63,7 +68,31 @@ $ yarn dev
 $ npx prisma migrate dev --name init
 
 # Inicialize o servidor em modo desenvolvimento
-$ npm run dev
+$ yarn run dev
 
 # O servidor irá iniciar em http://localhost:3333
 ```
+
+## ✅ Requisitos Front-end
+
+Para executar o projeto você precisa instalar as depedência citadas a cima 
+
+```bash
+# Entre na pasta front end
+$ cd front-end
+
+# Execute o comando e o projeto sera aberto no Visual Studio Code
+$ code .
+
+# Instale as dependências
+$ yarn dev
+
+# Após isso você precisa gerar as tables no DB.
+
+# Inicialize o servidor em modo desenvolvimento
+$ yarn run dev
+
+# O servidor irá iniciar em http://localhost:3333
+```
+
+## in progress unit test e integration test 🚧
