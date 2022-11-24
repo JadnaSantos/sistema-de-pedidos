@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   View,
@@ -10,10 +10,10 @@ import {
 } from 'react-native'
 import * as zod from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthContext } from '../../contexts/AuthContext';
 
 const FormValidationSignupSchema = zod.object({
-  email: zod.string().email({
-  }),
+  email: zod.string().email(),
   password: zod.string().min(3, { message: "Must be 5 or more characters long" })
 })
 
@@ -21,6 +21,9 @@ type SchemaFields = zod.infer<typeof FormValidationSignupSchema>
 
 
 export function SignIn() {
+  const { signIn } = useContext(AuthContext)
+
+
   const FormValidation = useForm<SchemaFields>({
     resolver: zodResolver(FormValidationSignupSchema)
   })
@@ -28,10 +31,16 @@ export function SignIn() {
   const { handleSubmit, register, reset, control } = FormValidation
 
   async function onSubmit(data: SchemaFields) {
-    const { email, password } = data
+    try {
+      const { email, password } = data
 
-    console.log(data.email)
-    console.log(data.password)
+      await signIn({
+        email, password
+      })
+
+    } catch (error) {
+
+    }
 
     reset()
   }
