@@ -22,6 +22,8 @@
 
 - [Nextjs](https://nextjs.org/)
 - [SAAS](https://sass-lang.com/)
+- [Zod](https://zod.dev/)
+- [React-use-form](https://react-hook-form.com/api/Useform/)
 
 <details open>
   <summary><h3>Arquitetura </h3></summary>
