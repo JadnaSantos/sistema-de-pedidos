@@ -25,6 +25,8 @@
 - [Zod](https://zod.dev/)
 - [React-use-form](https://react-hook-form.com/api/Useform/)
 
+#### Mobile - in progress 🚧
+
 <details open>
   <summary><h3>Arquitetura </h3></summary>
 Para execução do projeto eu procurei utilizar Single Responsibility Principle (SRP), que basicamente consiste 
