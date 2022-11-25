@@ -1,5 +1,10 @@
 <h1 align="center"> Sistema de Pedidos 👩🏾‍🍳 </h1>
 
+### Sobre
+O projeto consiste em sistema de agendamentos que podem ser uitlizados por restaurantes e garços a ideia é da produtividade 
+em ambas partes. Neste sistema o garçom poderá abrir uma mesa, criar um novo pedido, retirar pedido, e deletar pedidos, todos
+este serviço será repletido na cozinha que utilizará também o sistema.
+
 ### 🚀 Tecnologias
 
 #### Back-End
@@ -33,6 +38,13 @@ Para execução do projeto eu procurei utilizar Single Responsibility Principle 
 em modulos e funções deve ter uma responsabilidade.
   
 </details>  
+
+
+### Features In Progress
+- [ ] Implemetar Testes unitários e integração Back-end; 🚧
+- [ ] Implemetar Teste no Front-end; 🚧
+- [ ] Fizalizar mobile; 🚧
+
 
 
 ### 📃 Regras de Négocio
