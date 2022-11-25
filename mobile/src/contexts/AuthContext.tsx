@@ -1,5 +1,8 @@
 import React, { useState, createContext, ReactNode } from "react";
 import { api } from '../../src/services/api'
+import AsyncStoregeLib from "@react-native-async-storage/async-storage"
+import { AppError } from "../utils/AppError";
+
 
 type UserProps = {
   id: string;
@@ -46,6 +49,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { id, name, token } = response.data
 
+      const data = {
+        ...response.data
+      }
+
+      await AsyncStoregeLib.setItem('@system', JSON.stringify(data))
+
+      api.defaults.headers.common['Authorization'] = `Bearer${token}`
+
       setUser({
         id,
         name,
@@ -56,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setIsLoading(false)
 
     } catch (error) {
-      console.log('error ao acessar', error)
+      const isAppError = error instanceof AppError
       setIsLoading(false)
     }
   }
