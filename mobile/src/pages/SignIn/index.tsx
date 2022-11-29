@@ -32,12 +32,11 @@ export function SignIn() {
       })
 
     } catch (error) {
-
+      console.error(error)
     }
 
     reset()
   }
-
 
 
   return (

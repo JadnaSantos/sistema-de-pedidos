@@ -95,7 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setLoadingAuth(false);
 
-
+      navigation.navigate('dashboard')
 
     } catch (error) {
       const isAppError = error instanceof AppError
