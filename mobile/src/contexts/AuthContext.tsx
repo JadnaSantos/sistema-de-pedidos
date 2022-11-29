@@ -1,118 +1,118 @@
 import React, { useState, createContext, ReactNode, useEffect } from "react";
 import { api } from '../../src/services/api'
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { AppError } from "../utils/AppError";
-import { useNavigation } from "@react-navigation/native";
+import { UserDTO } from "../dtos/UserDTO";
+import { storageUserGet, storageUserRemove, storageUserSave } from "../storage/storageUser";
+import { storageAuthTokenGet, storageAuthTokenRemove, storageAuthTokenSave } from "../storage/storageAuthToken";
 
-type UserProps = {
-  id: string;
-  name: string;
-  email: string;
-  token: string;
-}
-
-type AuthContextData = {
-  user: UserProps;
-  isAuthenticated: boolean;
-  signIn: (credential: SignInProps) => Promise<void>
-  loadingAuth: boolean;
-  isloading: boolean;
-  singOut: () => Promise<void>
-}
-
-type AuthProviderProps = {
-  children: ReactNode
-}
+// type UserProps = {
+//   id: string;
+//   name: string;
+//   email: string;
+//   token: string;
+// }
 
 type SignInProps = {
   email: string;
   password: string;
 }
 
+type AuthContextData = {
+  user: UserDTO;
+  isAuthenticated: boolean;
+  signIn: (credential: SignInProps) => Promise<void>
+  loadingAuth: boolean;
+  isloading: boolean;
+  signOut: () => Promise<void>
+}
+
+type AuthProviderProps = {
+  children: ReactNode
+}
+
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const navigation = useNavigation();
-  const [loadingAuth, setLoadingAuth] = useState(false)
-  const [isloading, setIsLoading] = useState(true)
+  const [loadingAuth, setLoadingAuth] = useState(true)
+  const [isloading, setIsLoading] = useState(false)
 
-  const [user, setUser] = useState<UserProps>({
-    id: '',
-    name: '',
-    email: '',
-    token: ''
-  })
+  const [user, setUser] = useState<UserDTO>({} as UserDTO)
 
 
   const isAuthenticated = !!user.name;
 
-  async function getUser() {
-    const userInfo = await AsyncStorage.getItem('@system')
+  async function userAndTokenUpdate(userData: UserDTO, token: string) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    let hasUser: UserProps = JSON.parse(userInfo || '{}')
+    setUser(userData);
+  }
 
-    if (Object.keys(hasUser).length > 0) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${hasUser.token}`
+  async function storageUserAndTokenSave(userData: UserDTO, token: string) {
+    try {
+      setLoadingAuth(true)
+      await storageUserSave(userData);
+      await storageAuthTokenSave(token);
 
-      setUser({
-        id: hasUser.id,
-        name: hasUser.name,
-        email: hasUser.email,
-        token: hasUser.token,
+    } catch (error) {
+      throw error
+    } finally {
+      setLoadingAuth(false);
+    }
+  }
+
+  async function signIn({ email, password }: SignInProps) {
+    try {
+      setLoadingAuth(true);
+      const { data } = await api.post('/sessions', {
+        email, password
       })
 
-      setIsLoading(false)
+
+      if (data.user && data.token) {
+        await storageUserAndTokenSave(data.user, data.token)
+        userAndTokenUpdate(data.user, data.token)
+      }
+
+    } catch (error) {
+      throw error
+    } finally {
+      setLoadingAuth(false);
+    }
+  }
+
+  async function signOut() {
+    try {
+      setLoadingAuth(true);
+      setUser({} as UserDTO);
+      await storageUserRemove();
+      await storageAuthTokenRemove();
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoadingAuth(false);
+    }
+  }
+
+  async function loadUserData() {
+    try {
+      setLoadingAuth(true);
+
+      const userLogged = await storageUserGet();
+      const token = await storageAuthTokenGet();
+
+      if (token && userLogged) {
+        userAndTokenUpdate(userLogged, token);
+      }
+    } catch (error) {
+      throw error
+    } finally {
+      setLoadingAuth(false);
     }
   }
 
   useEffect(() => {
-    getUser()
+    loadUserData()
   }, [])
 
-  async function signIn({ email, password }: SignInProps) {
-    setLoadingAuth(true);
-    try {
-      const response = await api.post('/sessions', {
-        email, password
-      })
-
-      const { id, name, token } = response.data
-
-      const data = {
-        ...response.data
-      }
-
-      await AsyncStorage.setItem('@system', JSON.stringify(data))
-
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-      setUser({
-        id,
-        name,
-        email,
-        token
-      })
-
-      setLoadingAuth(false);
-
-      navigation.navigate('dashboard')
-
-    } catch (error) {
-      const isAppError = error instanceof AppError
-      setLoadingAuth(false);
-    }
-  }
-
-  async function singOut() {
-    await AsyncStorage.clear().then(() => {
-      setUser({
-        id: '',
-        name: '',
-        email: '',
-        token: ''
-      })
-    })
-  }
 
   return (
     <AuthContext.Provider value={{
@@ -121,7 +121,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       signIn,
       loadingAuth,
       isloading,
-      singOut
+      signOut
     }}>
 
       {children}

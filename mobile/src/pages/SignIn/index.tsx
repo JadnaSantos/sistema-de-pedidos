@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as zod from 'zod'
+import { ToastAndroid } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthContext } from '../../contexts/AuthContext';
 import { Button, Container, Input, InputContainer, Logo, TextButton } from './styles';
+
+import { AppError } from '../../utils/AppError';
 
 const FormValidationSignupSchema = zod.object({
   email: zod.string().email(),
@@ -21,7 +24,7 @@ export function SignIn() {
     resolver: zodResolver(FormValidationSignupSchema)
   })
 
-  const { handleSubmit, register, reset, control } = FormValidation
+  const { handleSubmit, reset, control, formState: { errors } } = FormValidation
 
   async function onSubmit(data: SchemaFields) {
     try {
@@ -33,6 +36,13 @@ export function SignIn() {
 
     } catch (error) {
       console.error(error)
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível entrar. Tente novamente mais tarde.'
+
+      ToastAndroid.show(
+        title,
+        ToastAndroid.SHORT
+      );
     }
 
     reset()
@@ -49,6 +59,7 @@ export function SignIn() {
         <Controller
           control={control}
           name="email"
+          rules={{ required: 'Informe o e-mail' }}
           render={({ field: { value, onChange } }) => (
             <Input
               placeholder="Digite seu email"
@@ -62,6 +73,7 @@ export function SignIn() {
         <Controller
           control={control}
           name="password"
+          rules={{ required: 'Informe a senha' }}
           render={({ field: { value, onChange } }) => (
             <Input
               placeholder="Digite sua senha"
