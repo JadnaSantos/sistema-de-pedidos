@@ -7,10 +7,9 @@ import { AppRoutes } from "./app.routes"
 import { AuthContext } from "../contexts/AuthContext";
 
 export function Routes() {
-  const { isAuthenticated } = useContext(AuthContext);
-  const loading = false;
+  const { isAuthenticated, isloading } = useContext(AuthContext);
 
-  if (loading) {
+  if (isloading) {
     return (
       <View
         style={{
