@@ -21,7 +21,6 @@ type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (credential: SignInProps) => Promise<void>
   loadingAuth: boolean;
-  isloading: boolean;
   signOut: () => Promise<void>
 }
 
@@ -33,7 +32,6 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [loadingAuth, setLoadingAuth] = useState(true)
-  const [isloading, setIsLoading] = useState(false)
 
   const [user, setUser] = useState<UserDTO>({} as UserDTO)
 
@@ -120,7 +118,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isAuthenticated,
       signIn,
       loadingAuth,
-      isloading,
       signOut
     }}>
 

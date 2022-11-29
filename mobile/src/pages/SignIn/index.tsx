@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as zod from 'zod'
 import { ToastAndroid } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthContext } from '../../contexts/AuthContext';
 import { Button, Container, Input, InputContainer, Logo, TextButton } from './styles';
-
+import { useToast } from 'native-base';
 import { AppError } from '../../utils/AppError';
 
 const FormValidationSignupSchema = zod.object({
@@ -18,6 +18,7 @@ type SchemaFields = zod.infer<typeof FormValidationSignupSchema>
 
 export function SignIn() {
   const { signIn } = useContext(AuthContext)
+  const [isLoading, setIsLoading] = useState(false)
 
 
   const FormValidation = useForm<SchemaFields>({
@@ -28,6 +29,7 @@ export function SignIn() {
 
   async function onSubmit(data: SchemaFields) {
     try {
+      setIsLoading(true);
       const { email, password } = data
 
       await signIn({
@@ -39,12 +41,8 @@ export function SignIn() {
       const isAppError = error instanceof AppError;
       const title = isAppError ? error.message : 'Não foi possível entrar. Tente novamente mais tarde.'
 
-      ToastAndroid.show(
-        title,
-        ToastAndroid.SHORT
-      );
     }
-
+    setIsLoading(false);
     reset()
   }
 
