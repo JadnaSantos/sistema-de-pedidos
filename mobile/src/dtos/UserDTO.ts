@@ -4,3 +4,4 @@ export type UserDTO = {
   email: string;
   token: string;
 }
+

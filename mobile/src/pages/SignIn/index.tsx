@@ -1,12 +1,11 @@
 import { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as zod from 'zod'
-import { ToastAndroid } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthContext } from '../../contexts/AuthContext';
 import { Button, Container, Input, InputContainer, Logo, TextButton } from './styles';
-import { useToast } from 'native-base';
 import { AppError } from '../../utils/AppError';
+import { ActivityIndicator } from 'react-native';
 
 const FormValidationSignupSchema = zod.object({
   email: zod.string().email(),
@@ -17,7 +16,7 @@ type SchemaFields = zod.infer<typeof FormValidationSignupSchema>
 
 
 export function SignIn() {
-  const { signIn } = useContext(AuthContext)
+  const { signIn, loadingAuth } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
 
 
@@ -83,12 +82,14 @@ export function SignIn() {
           )}
         />
 
-        <Button
-          onPress={handleSubmit(onSubmit)}
-        >
-          <TextButton>
-            Acessar
-          </TextButton>
+        <Button onPress={handleSubmit(onSubmit)}>
+          {loadingAuth ? (
+            <ActivityIndicator size={25} color="#fff" />
+          ) : (
+            <TextButton>
+              Acessar
+            </TextButton>
+          )}
         </Button>
       </InputContainer>
     </Container>
