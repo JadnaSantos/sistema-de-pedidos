@@ -30,7 +30,10 @@ este serviço será repletido na cozinha que utilizará também o sistema.
 - [Zod](https://zod.dev/)
 - [React-use-form](https://react-hook-form.com/api/Useform/)
 
-#### Mobile - in progress 🚧
+#### Mobile - <strong>In Progress 🚧</strong>
+- [Zod](https://zod.dev/)
+- [React-use-form](https://react-hook-form.com/api/Useform/)
+- [Styled-components](https://styled-components.com/)
 
 <details open>
   <summary><h3>Arquitetura </h3></summary>
