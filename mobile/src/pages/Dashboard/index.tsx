@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ContainerSafe, Input, TextOrder, Button, TextButton } from './styles';
 import * as zod from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from '@react-navigation/native';
+import { api } from '../../services/api';
 
 
 const FormValidationOrderSchema = zod.object({
-  table: zod.string()
+  table: zod.string(),
 })
 
 type SchemaFields = zod.infer<typeof FormValidationOrderSchema>
@@ -24,9 +25,19 @@ export function Dashboard() {
   const { handleSubmit, reset, control } = FormValidation
 
   async function openOrder(data: SchemaFields) {
-    console.log(data)
+    try {
+      const { table } = data
 
-    navigation.navigate('order', { number: data.table, order_id: '24ea3aa1-a3f2-469c-b45a-05d5e44958f8' })
+      const response = await api.post('/order', {
+        table: Number(table),
+      })
+
+      console.log('response', response)
+    } catch (err) {
+      console.log(err)
+    }
+
+    navigation.navigate('order', { number: data.table, order_id: data.table })
 
     reset()
   }
