@@ -28,11 +28,10 @@ export function Dashboard() {
     try {
       const { table } = data
 
-      const response = await api.post('/order', {
+      await api.post('/order', {
         table: Number(table),
       })
 
-      console.log('response', response)
     } catch (err) {
       console.log(err)
     }
