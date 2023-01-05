@@ -43,13 +43,6 @@ em modulos e funções deve ter uma responsabilidade.
 </details>  
 
 
-### Features In Progress
-- [ ] Implemetar Testes unitários e integração Back-end; 🚧
-- [ ] Implemetar Teste no Front-end; 🚧
-- [ ] Fizalizar mobile; 🚧
-
-
-
 ### 📃 Regras de Négocio
 
 - [x] Cadastrar um novo usuário;
